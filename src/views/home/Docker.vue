@@ -1,8 +1,10 @@
 <template>
     <div class="docker">
     <span class="docker__item" v-for="(item,index) in dockerList" :key='item.icon' :class="{'docker__item':true,'docker__item--active':index===0}">
-      <div class="iconfont" v-html="item.icon"></div>
-      <div class="docker__title">{{item.text}}</div>
+      <router-link :to="item.to">
+        <div class="iconfont" v-html="item.icon"></div>
+        <div class="docker__title">{{item.text}}</div>
+      </router-link>
       </span>
   </div>
 </template>
@@ -12,10 +14,10 @@ export default {
     name:'Docker',
     setup(){
         const dockerList=[
-            {icon:'&#xe7c6;',text:'首页'},
-            {icon:'&#xe600;',text:'购物车'},
-            {icon:'&#xe601;',text:'订单'},
-            {icon:'&#xe8a0;',text:'我的'},
+            {icon:'&#xe7c6;',text:'首页',to:{name:'Home'}},
+            {icon:'&#xe600;',text:'购物车',to:{name:'CartList'}},
+            {icon:'&#xe601;',text:'订单',to:{name:'Home'}},
+            {icon:'&#xe8a0;',text:'我的',to:{name:'Home'}},
         ];
         return { dockerList }
     }
@@ -37,6 +39,10 @@ export default {
   padding:0 .18rem;
   box-sizing: border-box;
   color:$content-fontcolor;
+  a{
+    color:$content-fontcolor;
+    text-decoration: none;
+  }
   &__item{
       flex:1;
       text-align: center;

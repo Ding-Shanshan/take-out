@@ -52,7 +52,7 @@
         总计：<span class="check__info__price">&yen; {{total[1]}}</span>
       </div>
       <div class="check__btn">  
-        <router-link :to="{name:'Home'}">
+        <router-link :to="{path:`/OrderConfirmation/${shopId}`}">
           去结算
         </router-link>    
       </div>
@@ -72,24 +72,6 @@ const useCart=()=>{
         const route=useRoute();
         const shopId=route.params.id;
         const cartList=store.state.cartList;  
-        const total=computed(()=>{
-          const productList=cartList[shopId]
-            let count=0;
-            let summoney=0;
-            if(productList)
-            {
-                for(let i in productList)
-                {
-                    const product=productList[i]
-                    count+=product.count;
-                    if(product.check)
-                    {
-                      summoney+=product.count*product.price;
-                    }
-                }
-            }
-            return [count,summoney.toFixed(2),productList];
-        });
         const changeCartItemChecked=(shopId,productId)=>{
           store.commit('changeCartItemChecked',{
             shopId,productId
@@ -104,7 +86,7 @@ const useCart=()=>{
           store.commit('productCheckAll',{shopId})
         };
         const allCheck=computed(()=>{
-            const productList=cartList[shopId]
+            const productList=cartList[shopId]?.productList
             let count=0;
             let result=true;
             if(productList)
@@ -120,7 +102,7 @@ const useCart=()=>{
             }
             return result;
         });
-        return { total,shopId,changeCartItemChecked,cleanCartProducts,productCheckAll,allCheck};
+        return { shopId,changeCartItemChecked,cleanCartProducts,productCheckAll,allCheck};
 }
 
 //是否展示购物车
@@ -136,8 +118,8 @@ export default {
     name:'Cart',
     setup() {
       const {showCart,showProduct}=toggleCaerEffect();
-      const { total,shopId,changeCartItemChecked,cleanCartProducts,productCheckAll,allCheck}=useCart();
-      const { CartList,addItemToCart,downItemToCart }=useCommonEffert(); 
+      const { shopId,changeCartItemChecked,cleanCartProducts,productCheckAll,allCheck}=useCart();
+      const { CartList,addItemToCart,downItemToCart,total }=useCommonEffert(shopId); 
       return { total,addItemToCart,downItemToCart,shopId,changeCartItemChecked,cleanCartProducts,
               productCheckAll,allCheck,showProduct,showCart}
     },
@@ -175,6 +157,7 @@ export default {
       &__check{
         font-size:.2rem;
         margin-right: .06rem;
+        cursor: pointer;
       }
       &__all{
         flex:1;
@@ -182,6 +165,7 @@ export default {
         padding-left:.16rem;
         font-size:.16rem;
         color:$content-fontcolor;
+        cursor: pointer;
       }
       .isorcheck{
         color:$btnColor;
@@ -192,7 +176,8 @@ export default {
         text-align: right;
         padding-right:.3rem;
         font-size:.16rem;
-        color:$content-fontcolor
+        color:$content-fontcolor;
+        cursor: pointer;
       }
     }
     &__item{
@@ -267,13 +252,15 @@ export default {
         &__minus{
             border:.01rem solid $medium-fontColor;
             color:$medium-fontColor;
-            margin-right:.08rem
+            margin-right:.08rem;
+            cursor: pointer;
         }
         &__plus{
             background: $btnColor;
             border:.01rem solid $btnColor;
             color:$bgColor;
-            margin-left:.08rem
+            margin-left:.08rem;
+            cursor: pointer;
         }
     }
 }
@@ -293,6 +280,7 @@ export default {
       font-size: .22rem;
       width: .30rem;
       height: .30rem;
+      cursor: pointer;
     }
     &__tag {
       position: absolute;

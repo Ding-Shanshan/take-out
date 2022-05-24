@@ -22,9 +22,9 @@
                 <span class="product__number__minus"
                 @click="downItemToCart(shopId,item._id,item)">-</span>
                 
-                {{$store.state.cartList?.[shopId]?.[item._id]?.count||0}}
+                {{$store.state.cartList?.[shopId]?.productList?.[item._id]?.count||0}}
                 <span class="product__number__plus"
-                @click="addItemToCart(shopId,item._id,item)">+</span>
+                @click="changeShopName(shopId,item._id,item,shopName)">+</span>
                 </div>
             </div>
         </div>
@@ -67,19 +67,30 @@ const useContentEffect=()=>{
         data.currentTab=tab;
         getContentData(tab);
     }
+            const store= useStore();
+    const changeShopidName=(shopId,shopName)=>{
+        store.commit('changeShopName',{shopId,shopName});
+    }
+   
     const {contentList,currentTab}=toRefs(data)
-    return {contentList,cateList,handleCateClick,currentTab}
+    return {contentList,cateList,handleCateClick,currentTab,changeShopidName}
 }
 
 
 export default {
     name:'Content',
+    props:['shopName'],
     setup(){
         const route=useRoute();
         const shopId=route.params.id;
-       const {contentList,cateList,handleCateClick,currentTab}=useContentEffect();
-       const {CartList,addItemToCart,downItemToCart}=useCommonEffert(); 
-       return {contentList,cateList,handleCateClick,currentTab,CartList,shopId,addItemToCart,downItemToCart};
+        const {contentList,cateList,handleCateClick,currentTab,changeShopidName}=useContentEffect();
+        const {CartList,addItemToCart,downItemToCart}=useCommonEffert(); 
+        const changeShopName=(shopId,productid,item,shopName)=>{
+            addItemToCart(shopId,productid,item)
+            changeShopidName(shopId,shopName);
+             }
+       return {contentList,cateList,handleCateClick,currentTab,CartList,shopId,
+                addItemToCart,downItemToCart,changeShopName};
        
     }
 }
@@ -101,6 +112,7 @@ export default {
     overflow-y: scroll;
     height: 100%;
     width:.76rem;
+    cursor: pointer;
     background:$search-bgColor;
     &__item{
         line-height: .4rem;
@@ -177,13 +189,15 @@ export default {
         &__minus{
             border:.01rem solid $medium-fontColor;
             color:$medium-fontColor;
-            margin-right:.08rem
+            margin-right:.08rem;
+            cursor: pointer;
         }
         &__plus{
             background: $btnColor;
             border:.01rem solid $btnColor;
             color:$bgColor;
-            margin-left:.08rem
+            margin-left:.08rem;
+            cursor: pointer;
         }
     }
 }
