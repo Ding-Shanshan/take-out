@@ -1,5 +1,5 @@
 # DD外卖
-线上演示地址：https://shanshan-ding.gitee.io/ddwm.index.html
+线上演示地址：https://shanshan-ding.gitee.io/ddwm/index.html
 
 ## 安装与启动
 ```
