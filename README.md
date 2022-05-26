@@ -1,24 +1,23 @@
-# daojia
+# DD外卖
+线上演示地址：
 
-## Project setup
+## 安装与启动
 ```
 npm install
 ```
-
-### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### 主要功能
+- 登录注册：登录校验
+- 首页展示：获取商家列表
+- 商户详情：获取商户信息及商品列表
+- 购物车管理：获取购物车列表、实现购物车加减商品
+- 订单管理：提交订单、确定、取消订单、获取订单列表
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 主要技术
+- Composition API
+- VueCLI
+- Vue-Router
+- VueX
