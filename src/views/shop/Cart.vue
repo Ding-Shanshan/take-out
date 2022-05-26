@@ -51,10 +51,13 @@
       <div class="check__info">
         总计：<span class="check__info__price">&yen; {{total[1]}}</span>
       </div>
-      <div class="check__btn">  
+      <div class="check__btn" v-show="total[0]>0">  
         <router-link :to="{path:`/OrderConfirmation/${shopId}`}">
           去结算
         </router-link>    
+      </div>
+      <div class="check__btn check__btn__gray" v-show="total[0]<=0">       
+          去结算
       </div>
     </div>
   </div>
@@ -153,7 +156,7 @@ export default {
     &__header{
       display:flex;
       line-height: .52rem;
-      border-bottom: 1px solid $content-bgColor;
+      border-bottom: .01rem solid $content-bgColor;
       &__check{
         font-size:.2rem;
         margin-right: .06rem;
@@ -318,6 +321,9 @@ export default {
     a {
       color: $bgColor;
       text-decoration: none;
+    }
+    &__gray{
+      background-color:$false-btn-bgColor;
     }
   }
 }

@@ -45,7 +45,7 @@ export default {
   }
   &__content{
     &--border{
-         border-bottom: 1px solid $content-bgColor;
+         border-bottom: .01rem solid $content-bgColor;
     }
     flex:1;
     &__title{

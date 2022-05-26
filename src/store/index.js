@@ -6,14 +6,17 @@ const setLocalCartList=(state)=>{
   localStorage.cartList=cartListString;
 }
 const getLocalCartList=()=>{
-  return JSON.parse(localStorage.cartList)||{}
+  try{
+    return JSON.parse(localStorage.cartList)
+  }catch(e){
+    return {}
+  }
 }
 export default createStore({
   state: {
     cartList:getLocalCartList()
     // cartList:{}
     // cartList:{
-      
       //第一层级商铺id
          //第二层商品id:内容是商品内容以及购物数量
         //  shopId:{
@@ -30,12 +33,12 @@ export default createStore({
           //     }
         //   }
         //  }
-       
     // }
   },
   getters: {
   },
   mutations: {
+    //购物车加商品
     addItemToCart(state,payload){
       const { shopId,productid,productinfo }=payload;
       //shopid为店铺id,shopinfo为店铺中的商品信息，produceid为商品id
@@ -56,6 +59,7 @@ export default createStore({
       state.cartList[shopId]=shopInfo;
       setLocalCartList(state);
     },
+    //购物车减商品
     downItemToCart(state,payload){
       const {shopId,productid,productinfo}=payload;
       let shopinfo=state.cartList[shopId];
@@ -68,6 +72,7 @@ export default createStore({
       state.cartList[shopId]=shopinfo;
       setLocalCartList(state);
     },
+    //第一次加商品增加店铺名称
     changeShopName(state,payload){
       const {shopId,shopName}=payload;
       const shopInfo=state.cartList[shopId]||{
@@ -77,17 +82,20 @@ export default createStore({
       state.cartList[shopId]=shopInfo;
       setLocalCartList(state);
     },
+    //在购物车中是否勾选商品
     changeCartItemChecked(state,payload){
       const {shopId,productId}=payload;
       let product=state.cartList[shopId].productList[productId];
       product.check=!product.check;
       setLocalCartList(state);
     },
+    //清空购物车
     cleanCartProducts(state,payload){
       const {shopId}=payload;
       state.cartList[shopId].productList={};
       setLocalCartList(state);
     },
+    //购物车中是否全选商品
     productCheckAll(state,payload){
       const {shopId}=payload;
       const procucts=state.cartList[shopId].productList;

@@ -20,14 +20,15 @@ export const useCommonEffert=(shopId)=>{
     }
     const cartList = store.state.cartList;
     const total=computed(()=>{
-        const productList=cartList[shopId]?.productList;
+        const productLists=cartList[shopId]?.productList;
+        const shopName=cartList[shopId]?.shopName;
           let count=0;
           let summoney=0;
-          if(productList)
+          if(productLists)
           {
-              for(let i in productList)
+              for(let i in productLists)
               {
-                  const product=productList[i]
+                  const product=productLists[i]
                   count+=product.count;
                   if(product.check)
                   {
@@ -35,7 +36,17 @@ export const useCommonEffert=(shopId)=>{
                   }
               }
           }
-          return [count,summoney.toFixed(2),productList];
+          const productList={}
+          for(let i in productLists)
+          {
+            const product=productLists[i];
+            if(product.count>0)
+            {
+                productList[i]=product;
+            }
+          }
+        //   返回加购数量，总金额，商品列表，店铺名称
+          return [count,summoney.toFixed(2),productList,shopName];
       });
     return {CartList,addItemToCart,downItemToCart,total};
 

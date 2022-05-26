@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <script>
+      // 当进入到网页的时候立马知道网页的宽度是多少
+      var width=document.documentElement.clientWidth||document.body.clientWidth;
+      var radio=width/375;
+      var fontSize=100*radio;
+      document.getElementsByTagName('html')[0].style['font-size']=fontSize+'px';
+    </script>
   </head>
   <body>
     <noscript>

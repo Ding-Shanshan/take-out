@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Login from '../views/login/Login'
 
 const routes = [
+  //首页路由
   {
     path: '/',
     name: 'Home',
@@ -45,15 +46,29 @@ const routes = [
     name:'Shop',
     component: () => import(/* webpackChunkName: "Shop" */ '../views/shop/Shop')
   },
+  //购物车页面路由
   {
     path:'/CartList',
     name:'CartList',
-    component: () => import(/* webpackChunkName: "Cart" */ '../views/CartList/CartList')
+    component: () => import(/* webpackChunkName: "CartList" */ '../views/CartList/CartList')
   },
+  //提交订单页面路由
   {
     path:'/orderConfirmation/:id',
     name:'OrderConfirmation',
-    component: () => import(/* webpackChunkName: "Cart" */ '../views/OrderConfirmation/OrderConfirmation')
+    component: () => import(/* webpackChunkName: "OrderConfirmation" */ '../views/OrderConfirmation/OrderConfirmation')
+  },
+  //订单列表页面路由
+  {
+    path:'/orderList',
+    name:'OrderList',
+    component: () => import(/* webpackChunkName: "OrderList" */ '../views/orderList/OrderList')
+  },
+  //我的 页面路由
+  {
+    path:'/myself',
+    name:'Myself',
+    component: () => import(/* webpackChunkName: "Myself" */ '../views/myself/Myself')
   }
   // {
   //   path: '/about',
